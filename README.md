@@ -1,6 +1,6 @@
 # Distro
 
-This will be an ethereum browser.
+This will be an ethereum browser for __Android__.
 
 It exposes ethereum at http://localhost:8545, using web3J.
 
