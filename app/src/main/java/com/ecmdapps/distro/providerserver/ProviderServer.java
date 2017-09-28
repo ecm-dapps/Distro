@@ -36,7 +36,7 @@ class ProviderServer implements Responder {
         this.server = new AsyncHttpServer();
         this.asyncServer = new AsyncServer();
         this.resolver = resolver;
-        this.responses = new HashMap<String, AsyncHttpServerResponse>();
+        this.responses = new HashMap<>();
     }
 
     public void start(){
@@ -111,6 +111,36 @@ class ProviderServer implements Responder {
             } else if (rpc_method.equals("personal_listAccounts")) {
                 resolver.get_accounts(data, requestID);
 
+            } else if (rpc_method.equals("eth_newFilter")) {
+                error.put("code", -32601);
+                error.put("message", "DistroHall's provider platform does not support this method");
+                respond("error", error, data, requestID);
+
+            } else if (rpc_method.equals("eth_newBlockFilter")) {
+                error.put("code", -32601);
+                error.put("message", "DistroHall's provider platform does not support this method");
+                respond("error", error, data, requestID);
+
+            } else if (rpc_method.equals("eth_newPendingTransactionFilter")) {
+                error.put("code", -32601);
+                error.put("message", "DistroHall's provider platform does not support this method");
+                respond("error", error, data, requestID);
+
+            } else if (rpc_method.equals("eth_uninstallFilter")) {
+                error.put("code", -32601);
+                error.put("message", "DistroHall's provider platform does not support this method");
+                respond("error", error, data, requestID);
+
+            } else if (rpc_method.equals("eth_getFilterChanges")) {
+                error.put("code", -32601);
+                error.put("message", "DistroHall's provider platform does not support this method");
+                respond("error", error, data, requestID);
+
+            } else if (rpc_method.equals("eth_newFilter")) {
+                error.put("code", -32601);
+                error.put("message", "DistroHall's provider platform does not support this method");
+                respond("error", error, data, requestID);
+
             } else if (rpc_method.equals("personal_sign")) {
                 error.put("code", -32601);
                 error.put("message", "DistroHall's provider platform does not support personal_sign");
@@ -154,7 +184,7 @@ class ProviderServer implements Responder {
     }
 
     public void respond(String[] result, JSONObject query_data, String requestID) {
-        ArrayList<String> string_list = new ArrayList<String>(Arrays.asList(result));
+        ArrayList<String> string_list = new ArrayList<>(Arrays.asList(result));
         try {
             JSONArray array_result = new JSONArray();
             array_result.put(string_list);

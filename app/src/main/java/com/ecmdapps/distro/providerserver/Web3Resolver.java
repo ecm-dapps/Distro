@@ -86,7 +86,7 @@ public class Web3Resolver {
         self.dhe = new DHErrorHandler(ownerActivity, "Web3Resolver");
     }
 
-    public void ask_for_credentials(){
+    void ask_for_credentials(){
         Log.d("providerservice", "in web3 waiting for ACTIVITY");
 
         Intent i = new Intent(self.ownerActivity, GetCredentialsActivity.class);
@@ -114,10 +114,7 @@ public class Web3Resolver {
                 if(web3Ready()){
                     try {
                         setWeb3();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                        dhe.handle_error(e);
-                    } catch (InterruptedException e) {
+                    } catch (ExecutionException | InterruptedException e) {
                         e.printStackTrace();
                         dhe.handle_error(e);
                     }
@@ -134,7 +131,7 @@ public class Web3Resolver {
     boolean loading() {
         return credentialsLoading || web3Loading;
     }
-    public boolean ready(){
+    boolean ready(){
         return credentialsLoaded && web3Loaded;
     }
 
@@ -147,10 +144,7 @@ public class Web3Resolver {
                         setWeb3();
                         load_credentials(p);
                         credentialsChecker.run();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                        dhe.handle_error(e);
-                    } catch (InterruptedException e) {
+                    } catch (ExecutionException | InterruptedException e) {
                         e.printStackTrace();
                         dhe.handle_error(e);
                     }
@@ -168,27 +162,12 @@ public class Web3Resolver {
                     try {
                         setCredentials();
                         self.r.start();
-                    } catch (NoSuchAlgorithmException e) {
-                        e.printStackTrace();
-                        dhe.handle_error(e);
-                    } catch (NoSuchProviderException e) {
-                        e.printStackTrace();
-                        dhe.handle_error(e);
-                    } catch (InvalidAlgorithmParameterException e) {
+                    } catch (NoSuchAlgorithmException | InvalidAlgorithmParameterException | NoSuchProviderException | ExecutionException | InterruptedException | IOException e) {
                         e.printStackTrace();
                         dhe.handle_error(e);
                     } catch (CipherException e) {
                         e.printStackTrace();
                         dhe.showMessage("Invalid Password Provided");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        dhe.handle_error(e);
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                        dhe.handle_error(e);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                        dhe.handle_error(e);
                     }
                 } else {
                     self.credentialsLoading = true;
@@ -380,11 +359,7 @@ public class Web3Resolver {
         synchronized (lock) {
             try {
                 finalize_and_submit_tx(txParams, query_data, res);
-            } catch (JSONException e) {
-                dhe.handle_error(e);
-            } catch(ExecutionException e){
-                dhe.handle_error(e);
-            } catch(InterruptedException e){
+            } catch (JSONException | ExecutionException | InterruptedException e) {
                 dhe.handle_error(e);
             }
         }
@@ -397,11 +372,7 @@ public class Web3Resolver {
             synchronized (lock) {
                 try {
                     finalize_tx(txParams, query_data, res);
-                } catch (JSONException e) {
-                    dhe.handle_error(e);
-                } catch(ExecutionException e){
-                    dhe.handle_error(e);
-                } catch(InterruptedException e){
+                } catch (JSONException | InterruptedException | ExecutionException e) {
                     dhe.handle_error(e);
                 }
             }
@@ -490,16 +461,21 @@ public class Web3Resolver {
 
         if (!cancelled) {
             String process_method = data.getStringExtra(RPC_METHOD_LABEL);
-            if (process_method.equals("eth_sendTransaction") || process_method.equals("eth_signTransaction")) {
-                String approved_params_string = data.getStringExtra(APPROVED_PARAMS_LABEL);
-                Boolean sign_only = data.getBooleanExtra(SIGNONLY_LABEL, false);
-                on_approve_tx(new JSONObject(approved_params_string), new JSONObject(original_data_string), request_id, sign_only);
-            } else if (process_method.equals("eth_sign")) {
-                String approved_message = data.getStringExtra(APPROVED_MESSAGE_LABEL);
-                on_approve_message(approved_message, new JSONObject(original_data_string), request_id);
+            switch (process_method) {
+                case "eth_sendTransaction":
+                case "eth_signTransaction":
+                    String approved_params_string = data.getStringExtra(APPROVED_PARAMS_LABEL);
+                    Boolean sign_only = data.getBooleanExtra(SIGNONLY_LABEL, false);
+                    on_approve_tx(new JSONObject(approved_params_string), new JSONObject(original_data_string), request_id, sign_only);
+                    break;
+                case "eth_sign":
+                    String approved_message = data.getStringExtra(APPROVED_MESSAGE_LABEL);
+                    on_approve_message(approved_message, new JSONObject(original_data_string), request_id);
 
-            } else {
-                dhe.showMessage("could not recognise the rpc_method");
+                    break;
+                default:
+                    dhe.showMessage("could not recognise the rpc_method");
+                    break;
             }
         } else {
             on_cancelled(request_id, new JSONObject(original_data_string));
@@ -545,7 +521,7 @@ public class Web3Resolver {
         String nonce = txParams.optString("nonce", "0x0");
         String gas = txParams.optString("gas", "0x0");
 
-        HashMap<String, Future> futures = new HashMap<String, Future>();
+        HashMap<String, Future> futures = new HashMap<>();
 
         if (gas_price.equals("0x0")){
             Future received_gas_price = web3.ethGasPrice().sendAsync();
