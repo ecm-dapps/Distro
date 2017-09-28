@@ -93,8 +93,8 @@ class ProviderServer implements Responder {
             if (rpc_method.equals("eth_coinbase")) {
                 resolver.get_coinbase(data, requestID);
 
-            } else if (rpc_method.equals("dapphall_ping")) {
-                respond("dapphall_pong", data, requestID);
+            } else if (rpc_method.equals("distro_ping")) {
+                respond("distro_pong", data, requestID);
 
             } else if (rpc_method.equals("eth_accounts")) {
                 resolver.get_accounts(data, requestID);
@@ -113,42 +113,42 @@ class ProviderServer implements Responder {
 
             } else if (rpc_method.equals("eth_newFilter")) {
                 error.put("code", -32601);
-                error.put("message", "DistroHall's provider platform does not support this method");
+                error.put("message", "Distro's provider platform does not support" + rpc_method);
                 respond("error", error, data, requestID);
 
             } else if (rpc_method.equals("eth_newBlockFilter")) {
                 error.put("code", -32601);
-                error.put("message", "DistroHall's provider platform does not support this method");
+                error.put("message", "Distro's provider platform does not support" + rpc_method);
                 respond("error", error, data, requestID);
 
             } else if (rpc_method.equals("eth_newPendingTransactionFilter")) {
                 error.put("code", -32601);
-                error.put("message", "DistroHall's provider platform does not support this method");
+                error.put("message", "Distro's provider platform does not support " + rpc_method);
                 respond("error", error, data, requestID);
 
             } else if (rpc_method.equals("eth_uninstallFilter")) {
                 error.put("code", -32601);
-                error.put("message", "DistroHall's provider platform does not support this method");
+                error.put("message", "Distro's provider platform does not support " + rpc_method);
                 respond("error", error, data, requestID);
 
             } else if (rpc_method.equals("eth_getFilterChanges")) {
                 error.put("code", -32601);
-                error.put("message", "DistroHall's provider platform does not support this method");
+                error.put("message", "Distro's provider platform does not support " + rpc_method);
                 respond("error", error, data, requestID);
 
             } else if (rpc_method.equals("eth_newFilter")) {
                 error.put("code", -32601);
-                error.put("message", "DistroHall's provider platform does not support this method");
+                error.put("message", "Distro's provider platform does not support " + rpc_method);
                 respond("error", error, data, requestID);
 
             } else if (rpc_method.equals("personal_sign")) {
                 error.put("code", -32601);
-                error.put("message", "DistroHall's provider platform does not support personal_sign");
+                error.put("message", "Distro's provider platform does not support " + rpc_method);
                 respond("error", error, data, requestID);
 
             } else if (rpc_method.equals("personal_ecRecover")) {
                 error.put("code", -32601);
-                error.put("message", "DistroHall's provider platform does not support personal_ecRecover");
+                error.put("message", "Distro's provider platform does not support " + rpc_method);
                 respond("error", error, data, requestID);
 
             } else if ( !rpc_method.startsWith("eth_") && !rpc_method.startsWith("net_") && !rpc_method.startsWith("web3_")) {
