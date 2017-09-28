@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Security-Policy"
+              content="
+                default-src 'self' http://localhost:8545 data: gap: https://ssl.gstatic.com;
+                style-src 'self' 'unsafe-inline' 'unsafe-eval';
+                script-src 'self' 'unsafe-inline' 'unsafe-eval';
+                img-src 'self' data: content:;
+                media-src *;
+                "
+        >
+        <meta charset="utf-8">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <link rel="stylesheet" type="text/css" href="css/materialize.min.css">
+        <title>Distro: Welcome</title>
+    </head>
+    <body>
+        <div id="app">
+            <div class="navbar-fixed">
+                <nav>
+                    <div class="nav-wrapper">
+                        <a href="#!" class="brand-logo">Distro</a>
+                        <ul class="right hide-on-med-and-down"></ul>
+                    </div>
+                </nav>
+            </div>
+            <div class="row" id="starter-div">
+                <div class="col s12 center-align">
+                    <br/><br/><br/><br/><br/><br/>
+                    <br/><br/><br/><br/><br/><br/>
+                    <a id="starter-btn" class="waves-effect waves-light btn">Start Web3 Provider</a>
+                </div>
+            </div>
+
+            <div class="row" id="loader-div" style="display:none;">
+                <div class="col s12 center-align">
+                    <br/><br/><br/><br/><br/><br/>
+                    <br/><br/><br/><br/><br/><br/>
+                    <div class="progress">
+                        <div class="indeterminate"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="content-div" style="display:none;">
+                <div class="col s12">
+                    <ul class="collapsible" data-collapsible="accordion">
+                        <li>
+                            <div class="collapsible-header">Dapps</div>
+                            <div class="collapsible-body" style="height:300px; overflow:scroll;" active>
+                                <div id="dapps" class="col s12">
+                                    <div class="center-align">
+                                        <h5>Distributed Apps</h5>
+                                    </div>
+                                    <div id="dapp-list">
+                                        <div class="divider"></div>
+                                        <div class="row">
+                                            <div class="col s9">
+                                                Go To:
+                                                <div class="input-field inline">
+                                                    <input id="go_to" type="text">
+                                                    <label for="go_to">URL/Search</label>
+                                                </div>
+                                            </div>
+                                            <div class="col s3">
+                                                <a class="btn waves-effect waves-light" id="go_button">Go</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="collapsible-header">Wallet</div>
+                            <div class="collapsible-body" style="height:300px; overflow:scroll;">
+                                <div id="wallet" class="col s12">
+                                    <div class="center-align">
+                                        <h5>My Wallet</h5>
+                                    </div>
+                                    <p>
+                                        <b>My Address: </b><b id="coinbase"></b>
+                                    </p>
+                                    <p>
+                                        <b>My Balance: </b><b id="balance"></b>
+                                    </p>
+
+                                    <div class="divider"></div>
+                                    <div class="row">
+                                        <div class="col s12 center-align">
+                                            <b id="current_network"></b>
+                                            <div class="input-field col s12">
+                                                <select id="network_selector">
+                                                    <option value="" disabled selected>Choose a Network</option>
+                                                    <option value="https://mainnet.infura.io/KQVpBo7jJIBfKQLFg60S">Mainnet on Infura</option>
+                                                    <option value="https://rinkeby.infura.io/KQVpBo7jJIBfKQLFg60S">Rinkeby on Infura</option>
+                                                    <option value="https://ropsten.infura.io/KQVpBo7jJIBfKQLFg60S">Ropsten on Infura</option>
+                                                </select>
+                                                <label>Select Network</label>
+                                            </div>
+                                            <a class="btn waves-effect waves-light" id="change_network">Change Network</a>
+                                        </div>
+                                    </div>
+
+                                    <div class="divider"></div>
+                                    <!--<div class="row">
+                                        <div class="col s12 center-align">
+                                            <a id="log_toggler" class="btn waves-effect waves-light"> Toggle Logs</a>
+                                        </div>
+                                    </div>-->
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="collapsible-header">Tx: User</div>
+                            <div class="collapsible-body" style="height:300px; overflow:scroll;">
+                                <div id="userTx" class="col s12">
+                                    <div class="center-align">
+                                        <h5>User to User Transactions</h5>
+                                    </div>
+                                    <form class="col s12" name="sendEth" id="sendEth">
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                <input id="coinbase_from" class="coinbase" type="text" disabled>
+                                                <label class="active" for="coinbase_from">From</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                <input id="to_address" type="text">
+                                                <label class="active" for="to_address">To</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                <input id="eth_amount" type="number" step="0.0001">
+                                                <label for="eth_amount">Amount in ETH</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                <input id="gas_limit" type="number" value="50000">
+                                                <label for="gas_limit" class="active">Gas Limit</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                <input id="gas_price" type="number" value="10">
+                                                <label for="gas_price" class="active"> Gas Price in GWEI </label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                <a class="waves-effect waves-light btn" id="submit_send" >Send Transaction </a>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="collapsible-header">Tx: Contract</div>
+                            <div class="collapsible-body" style="height:300px; overflow:scroll;">
+                                <div id="contractTx" class="col s12">
+                                    <div class="center-align">
+                                        <h5>User to Contract transactions</h5>
+                                    </div>
+                                    <form class="col s12" name="contractEth" id="contractEth">
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                <input id="contract_sender_coinbase" class="coinbase" type="text">
+                                                <label class="active" for="contract_sender_coinbase">From</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                <input id="contract_address" type="text">
+                                                <label class="active" for="contract_address">Contract Address</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                <input id="contract_abi" type="text">
+                                                <label class="active" for="contract_abi">Contract ABI</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                <input id="contract_function" type="text">
+                                                <label class="active" for="contract_function">Contract Function</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                <input id="contract_function_args" type="text">
+                                                <label class="active" for="contract_function_args">Contract Function Args</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                <input id="contract_eth_amount" type="number">
+                                                <label for="contract_eth_amount">Value in ETH</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                <input id="contract_gas_limit" type="number" value="3141592">
+                                                <label for="contract_gas_limit" class="active">Gas Limit</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                <input id="contract_gas_price" type="number" value="10">
+                                                <label for="contract_gas_price" class="active"> Gas Price in GWEI </label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                <a class="btn waves-effect waves-light" id="contract_submit_send">Submit Transaction</a>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <pre id="log" class="distro_logs" style="display:none;"></pre>
+        <pre id="native_logs" class="distro_logs" style="display:none;"></pre>
+        <script type="text/javascript" src="file:///android_asset/www/js/web3.js"></script>
+        <script type="text/javascript" src="file:///android_asset/www/js/fastclick.js"></script>
+        <script type="text/javascript" src="file:///android_asset/www/js/pouchdb.js"></script>
+        <script type="text/javascript" src="file:///android_asset/www/js/pouchdb.find.js"></script>
+        <script type="text/javascript" src="file:///android_asset/www/js/jquery.js"></script>
+        <script type="text/javascript" src="file:///android_asset/www/js/materialize.js"></script>
+        <script type="text/javascript" src="file:///android_asset/www/js/util.js"></script>
+        <script type="text/javascript" src="file:///android_asset/www/js/index.js"></script>
+    </body>
+</html>

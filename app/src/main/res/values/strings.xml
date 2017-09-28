@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Distro</string>
+    <string name="default_no_transaction">No Transaction To Be Approved</string>
+</resources>
