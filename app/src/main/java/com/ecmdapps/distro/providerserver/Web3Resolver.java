@@ -41,7 +41,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.regex.Pattern;
 
 import static com.ecmdapps.distro.providerserver.DHIntentStrings.APPROVED_MESSAGE_LABEL;
 import static com.ecmdapps.distro.providerserver.DHIntentStrings.APPROVED_PARAMS_LABEL;
@@ -70,7 +69,6 @@ public class Web3Resolver {
     private Web3Resolver self;
 
     private static final Object lock = new Object();
-    private final Pattern HexChecker = Pattern.compile("^(0x)?[0-9A-F]+");
     private static final String PREFS = DHNameStrings.PREFERENCES_NAME;
 
     private boolean web3Loaded = false;
@@ -328,33 +326,6 @@ public class Web3Resolver {
         }
     }
 
-    void personal_sign(JSONArray rpc_params, JSONObject data, String res){
-        String address = rpc_params.optString(1, "0x0");
-        if(rpc_params.length() > 1 && !address.equals("0x0")){
-            String message = rpc_params.optString(0, "");
-            JSONObject extraParams = rpc_params.optJSONObject(2);
-
-            try {
-                JSONObject msgParams = new JSONObject(extraParams.toString());
-                msgParams.put("from", address);
-                msgParams.put("data", message);
-                validate_personal_message(msgParams, data, res);
-
-            } catch (JSONException e) {
-                r.respond("error",  ("error at Web3resolver during sign: " + e.getMessage()), data, res);
-                dhe.handle_error(e);
-            }
-
-        } else {
-            String err_message ="problem with parameters: "
-                    + "address is [" +address + "]"
-                    + "parameters length is [" + rpc_params.length() + "]";
-
-            r.respond("error", err_message , data, res);
-        }
-    }
-
-
     private void on_approve_tx(JSONObject txParams, JSONObject query_data, String res){
         synchronized (lock) {
             try {
@@ -401,22 +372,6 @@ public class Web3Resolver {
             validate_sender(msgParams, method, data, res);
         } else {
             r.respond("error", "from address not given", data, res);
-        }
-    }
-
-    private void validate_personal_message(JSONObject msg_params, JSONObject data, String res){
-        String from = msg_params.optString("from", "0x0");
-        String msg = msg_params.optString("data", "0x0");
-
-        if (HexChecker.matcher(msg).matches()) {
-            if (!from.equals("0x0") || !msg.equals("0x0")) {
-                String method = data.optString("method", "eth_sign");
-                validate_sender(msg_params, method, data, res);
-            } else {
-                r.respond("error", "from address not given or message is empty!", data, res);
-            }
-        } else {
-            r.respond("error", "message is not in a recognizable hex format", data, res);
         }
     }
 
