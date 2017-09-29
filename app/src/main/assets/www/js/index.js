@@ -19,14 +19,11 @@ $(document).ready(function(){
     try {
         $("#starter-btn").on("mousedown touchstart", function(){
             startWeb3Provider(function(response){
-                window.status = "loading";
-                statusChanged();
                 console.log(response);
             }, logResponse);
         });
-
         checker();
-        setInterval(checker, 5000);
+        setInterval(checker, 2500);
         $("#log_toggler").on("mousedown touchend", function(){
             $(".distro_logs").toggle();
         });

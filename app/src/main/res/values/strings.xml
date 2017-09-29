@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Distro</string>
     <string name="default_no_transaction">No Transaction To Be Approved</string>
+    <string name="new_wallet_credentials_title">Enter a password for your Keystore(Wallet). PLEASE DONT FORGET IT, IT IS NOT RECOVERABLE.</string>
+    <string name="old_wallet_credentials_title">Enter wallet password</string>
 </resources>

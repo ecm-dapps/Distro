@@ -63,7 +63,7 @@ public class MainActivity extends Activity {
                 }
             }
         });
-        webView.addJavascriptInterface(new Web3Interface(web3Resolver), "distro");
+        webView.addJavascriptInterface(new Web3Interface(web3Resolver, this), "distro");
         webView.loadUrl("file:///android_asset/www/index.html");
     }
 
