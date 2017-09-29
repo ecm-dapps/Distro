@@ -209,7 +209,7 @@ var startWeb3Provider = function(successCB, errorCB){
     var where = $("#go_to").val();
     if (isURL(where)){
         if (where.startsWith("http")){
-            var goref = where
+            var goref = where;
         } else {
             var goref = "http://" + where;
         }
