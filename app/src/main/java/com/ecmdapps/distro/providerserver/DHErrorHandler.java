@@ -13,11 +13,11 @@ public class DHErrorHandler {
     private String from;
     private Activity ownerActivity;
 
-    public DHErrorHandler(Activity ownerActivity, String from){
+    public DHErrorHandler(Activity ownerActivity, Object callerClass){
         this.ownerActivity = ownerActivity;
-        this.from = from;
+        this.from = callerClass.getClass().getName();
     }
-
+    
     public void handle_error(Exception e){
         StringWriter sw = new StringWriter();
         e.printStackTrace(new PrintWriter(sw));

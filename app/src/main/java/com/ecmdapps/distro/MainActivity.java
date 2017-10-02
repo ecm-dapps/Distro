@@ -20,6 +20,8 @@ import com.ecmdapps.distro.providerserver.Web3Resolver;
 
 import org.json.JSONException;
 
+import static com.ecmdapps.distro.providerserver.DHNameStrings.HOME_URL;
+
 public class MainActivity extends Activity {
 
     ProgressBar distroProgressBar;
@@ -64,7 +66,7 @@ public class MainActivity extends Activity {
             }
         });
         webView.addJavascriptInterface(new Web3Interface(web3Resolver, this), "distro");
-        webView.loadUrl("file:///android_asset/www/index.html");
+        webView.loadUrl(HOME_URL);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -77,7 +79,7 @@ public class MainActivity extends Activity {
                 try {
                     web3Resolver.approval_response(data);
                 } catch (JSONException e) {
-                    new DHErrorHandler(this, "Web3Interface").handle_error(e);
+                    new DHErrorHandler(this, this).handle_error(e);
                 }
             }
         }

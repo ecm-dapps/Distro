@@ -81,7 +81,7 @@ public class Web3Resolver {
         self.handler = new Handler();
         self.ownerActivity = activity;
         self.r = new ProviderServer(ownerActivity, self);
-        self.dhe = new DHErrorHandler(ownerActivity, "Web3Resolver");
+        self.dhe = new DHErrorHandler(ownerActivity, self);
     }
 
     void ask_for_credentials(){

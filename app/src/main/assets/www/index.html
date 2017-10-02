@@ -15,6 +15,7 @@
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
         <link rel="stylesheet" type="text/css" href="css/materialize.min.css">
+        <link rel="stylesheet" type="text/css" href="css/distro-style.css">
         <title>Distro: Welcome</title>
     </head>
     <body>
@@ -55,8 +56,7 @@
                                     <div class="center-align">
                                         <h5>Distributed Apps</h5>
                                     </div>
-                                    <div id="dapp-list">
-                                        <div class="divider"></div>
+                                    <div id="dapp-holder">
                                         <div class="row">
                                             <div class="col s9">
                                                 Go To:
@@ -66,9 +66,11 @@
                                                 </div>
                                             </div>
                                             <div class="col s3">
-                                                <a class="btn waves-effect waves-light" id="go_button">Go</a>
+                                                <a class="btn btn-small waves-effect waves-light" id="go_button">Go</a>
                                             </div>
                                         </div>
+                                        <div class="divider"></div>
+                                        <div id="dapp-list"></div>
                                     </div>
                                 </div>
                             </div>
@@ -232,13 +234,13 @@
 
         <pre id="log" class="distro_logs" style="display:none;"></pre>
         <pre id="native_logs" class="distro_logs" style="display:none;"></pre>
-        <script type="text/javascript" src="file:///android_asset/www/js/web3.js"></script>
-        <script type="text/javascript" src="file:///android_asset/www/js/fastclick.js"></script>
-        <script type="text/javascript" src="file:///android_asset/www/js/pouchdb.js"></script>
-        <script type="text/javascript" src="file:///android_asset/www/js/pouchdb.find.js"></script>
-        <script type="text/javascript" src="file:///android_asset/www/js/jquery.js"></script>
-        <script type="text/javascript" src="file:///android_asset/www/js/materialize.js"></script>
-        <script type="text/javascript" src="file:///android_asset/www/js/util.js"></script>
-        <script type="text/javascript" src="file:///android_asset/www/js/index.js"></script>
+        <script type="text/javascript" src="js/web3.js"></script>
+        <script type="text/javascript" src="js/fastclick.js"></script>
+        <script type="text/javascript" src="js/pouchdb.js"></script>
+        <script type="text/javascript" src="js/pouchdb.find.js"></script>
+        <script type="text/javascript" src="js/jquery.js"></script>
+        <script type="text/javascript" src="js/materialize.js"></script>
+        <script type="text/javascript" src="js/util.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
     </body>
 </html>

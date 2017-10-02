@@ -16,15 +16,16 @@
         android:layout_centerHorizontal="true"
         android:id="@+id/distroProgressBar"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        style="@android:style/Widget.ProgressBar.Horizontal" />
 
     <ProgressBar
         android:indeterminate="false"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/navigatorProgressBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        style="@android:style/Widget.ProgressBar.Horizontal" />
 
 </RelativeLayout>

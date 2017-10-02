@@ -32,7 +32,7 @@ class ProviderServer implements Responder {
     private HashMap<String, AsyncHttpServerResponse> responses;
 
     ProviderServer(Activity ownerActivity, Web3Resolver resolver) {
-        this.dhe = new DHErrorHandler(ownerActivity, "ProviderServer");
+        this.dhe = new DHErrorHandler(ownerActivity, this);
         this.server = new AsyncHttpServer();
         this.asyncServer = new AsyncServer();
         this.resolver = resolver;
